@@ -797,7 +797,7 @@ Connection.prototype.connect_respond = function(retval, msg) {
                 }
             }
             else {
-                greeting = config.get('me') + " ESMTP Haraka" + (this.header_hide_version  ? '' : ' ' + version) + " ready";
+                greeting = config.get('me') + " ESMTP" + (this.header_hide_version  ? '' : ' ' + version) + " ready";
                 if (this.banner_includes_uuid) {
                     greeting += ' (' + this.uuid + ')';
                 }
@@ -837,8 +837,7 @@ Connection.prototype.helo_respond = function(retval, msg) {
             this.respond(250, config.get('me') + " Hello " +
                 ((this.remote.host && this.remote.host !== 'DNSERROR' &&
                 this.remote.host !== 'NXDOMAIN') ? this.remote.host + ' ' : '') +
-                "[" + this.remote.ip + "]" +
-                ", Haraka is at your service.");
+                "[" + this.remote.ip + "]");
     }
 };
 
@@ -873,8 +872,7 @@ Connection.prototype.ehlo_respond = function(retval, msg) {
             var response = [config.get('me') + " Hello " +
                             ((this.remote.host && this.remote.host !== 'DNSERROR' &&
                             this.remote.host !== 'NXDOMAIN') ? this.remote.host + ' ' : '') +
-                            "[" + this.remote.ip + "]" +
-                            ", Haraka is at your service.",
+                            "[" + this.remote.ip + "]",
                             "PIPELINING",
                             "8BITMIME",
                             ];
@@ -895,7 +893,7 @@ Connection.prototype.capabilities_respond = function (retval, msg) {
 
 Connection.prototype.quit_respond = function(retval, msg) {
     var self = this;
-    this.respond(221, msg || config.get('me') + " closing connection. Have a jolly good day.", function() {
+    this.respond(221, msg || config.get('me') + " closing connection.", function() {
         self.disconnect();
     });
 };
@@ -1229,7 +1227,7 @@ Connection.prototype.cmd_internalcmd = function (line) {
     }
 
     require('./server').sendToMaster(command, results);
-    return this.respond(250, "Command sent for execution. Check Haraka logs for results.");
+    return this.respond(250, "Command sent for execution. Check logs for results.");
 }
 
 Connection.prototype.cmd_helo = function(line) {
