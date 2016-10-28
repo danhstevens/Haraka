@@ -1556,7 +1556,7 @@ Connection.prototype.data_respond = function (retval, msg) {
     }
 
     // We already checked for MAIL/RCPT in cmd_data
-    this.respond(354, "go ahead, make my day", function() {
+    this.respond(354, "go ahead", function() {
         // OK... now we get the data
         self.state = states.STATE_DATA;
         self.transaction.data_bytes = 0;
